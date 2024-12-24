@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "flying-everywhere"
+version = "0.1.0"
+description = "Бэкэнд веб-приложения для перелётов"
+authors = ["Макс <rumyantsev1m0s1@gmail.com>"]
+license = "Pizza"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
