@@ -30,8 +30,7 @@ class Flight(Base):
     ticket_cost = Column(type_=Integer, nullable=False)
 
     data_time = Column(
-        type_=DateTime(timezone=True), nullable=False,
-        server_default=func.now()
+        type_=DateTime(timezone=True), server_default=func.now()
     )
 
     aircraft_characteristics_id = Column(
