@@ -1,10 +1,13 @@
 from os import getenv
+from dotenv import load_dotenv
 
 from sqlalchemy.ext.asyncio import (
     create_async_engine, async_sessionmaker, AsyncSession
 )
 from sqlalchemy.orm import DeclarativeBase
 
+
+load_dotenv()
 
 db_user, db_password, db_host, db_port, db_name = (
     getenv("DB_USER"), getenv("DB_PASSWORD"), getenv("DB_HOST"),
