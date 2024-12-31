@@ -1,8 +1,11 @@
-"""flight and aircraft
+"""
+Таблица с информацией о перелёте имеет внешний ключ,
+который ссылается на таблицу с некими характеристиками самолёта,
+который осуществляет перелёт
 
-Revision ID: 57353d481481
+Revision ID: 96955fd79c7a
 Revises: 
-Create Date: 2024-12-30 21:02:17.920718
+Create Date: 2024-12-31 19:13:10.074946
 
 """
 from typing import Sequence, Union
@@ -12,7 +15,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '57353d481481'
+revision: str = '96955fd79c7a'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
