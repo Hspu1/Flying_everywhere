@@ -7,10 +7,8 @@ class SAircraft(BaseModel):
         default="Название самолёта (до 20 символов)"
     )
     weight: int = Field(
-        max_digits=3,
-        default="Вес самолёта в тоннах (целое значение)"
+        default="Вес самолёта в тоннах (целое число)", ge=1, le=999
     )
     length: int = Field(
-        max_digits=2,
-        default="Длина самолёта в метрах (целое значение)"
+        default="Длина самолёта в метрах (целое число)", ge=1, le=999
     )
