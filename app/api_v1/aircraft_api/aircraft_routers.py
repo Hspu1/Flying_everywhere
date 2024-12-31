@@ -8,7 +8,7 @@ from app.api_v1.aircraft_api.schemas import SAircraft
 from app.core import Aircraft
 
 (
-    create_aircraft, get_all_aircraft, get_aircraft_by_name,
+    create_aircraft, get_all_aircrafts, get_aircraft,
     update_aircraft_name, delete_aircraft
 ) = (
     APIRouter(tags=["aircraft"]), APIRouter(tags=["aircraft"]),
