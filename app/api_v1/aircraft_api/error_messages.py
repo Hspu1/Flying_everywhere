@@ -13,3 +13,10 @@ def no_data():
         status_code=404,
         detail="В базе данных пока нет ни одного самолёта"
     )
+
+
+def no_aircraft():
+    raise HTTPException(
+        status_code=404,
+        detail="В базе данных пока нет самолёта с таким названием"
+    )
