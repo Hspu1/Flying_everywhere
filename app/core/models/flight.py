@@ -27,12 +27,11 @@ class Flight(Base):
         comment="format -> YYYY-MM-DD HH:MI:SS"
     )
 
+    aircraft_name = Column(
+        String, ForeignKey("aircraft.name")
+    )
     ticket_cost = Column(type_=Integer, nullable=False)
 
-    data_time = Column(
+    created_at = Column(
         type_=DateTime(timezone=True), server_default=func.now()
-    )
-
-    aircraft_characteristics_id = Column(
-        Integer, ForeignKey("aircraft.aircraft_id")
     )

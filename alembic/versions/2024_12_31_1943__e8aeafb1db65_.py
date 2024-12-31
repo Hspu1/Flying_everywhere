@@ -1,11 +1,8 @@
-"""
-Таблица с информацией о перелёте имеет внешний ключ,
-который ссылается на таблицу с некими характеристиками самолёта,
-который осуществляет перелёт
+"""empty message
 
-Revision ID: 96955fd79c7a
+Revision ID: e8aeafb1db65
 Revises: 
-Create Date: 2024-12-31 19:13:10.074946
+Create Date: 2024-12-31 19:43:04.223708
 
 """
 from typing import Sequence, Union
@@ -15,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '96955fd79c7a'
+revision: str = 'e8aeafb1db65'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -30,7 +27,7 @@ def upgrade() -> None:
             sa.Column('length', sa.Integer(), nullable=False),
             sa.PrimaryKeyConstraint('aircraft_id')
     )
-    op.create_index(op.f('ix_aircraft_name'), 'aircraft', ['name'], unique=False)
+    op.create_index(op.f('ix_aircraft_name'), 'aircraft', ['name'], unique=True)
     op.create_table('flight',
             sa.Column('flight_id', sa.Integer(), autoincrement=True, nullable=False),
             sa.Column('flight_name', sa.String(length=30), nullable=False),
@@ -40,10 +37,10 @@ def upgrade() -> None:
             sa.Column('arrival_country', sa.String(length=50), nullable=False),
             sa.Column('arrival_city', sa.String(length=50), nullable=False),
             sa.Column('arrival_date_time', sa.DateTime(), nullable=False, comment='format -> YYYY-MM-DD HH:MI:SS'),
+            sa.Column('aircraft_name', sa.String(), nullable=True),
             sa.Column('ticket_cost', sa.Integer(), nullable=False),
-            sa.Column('data_time', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
-            sa.Column('aircraft_characteristics_id', sa.Integer(), nullable=True),
-            sa.ForeignKeyConstraint(['aircraft_characteristics_id'], ['aircraft.aircraft_id'], ),
+            sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
+            sa.ForeignKeyConstraint(['aircraft_name'], ['aircraft.name'], ),
             sa.PrimaryKeyConstraint('flight_id')
     )
     op.create_index(op.f('ix_flight_flight_name'), 'flight', ['flight_name'], unique=True)
