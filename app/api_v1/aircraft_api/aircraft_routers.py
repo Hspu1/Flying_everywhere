@@ -1,9 +1,11 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
-from starlette.status import HTTP_201_CREATED
+from starlette.status import HTTP_201_CREATED, HTTP_200_OK
 
-from app.api_v1.aircraft_api.routers_code import create_aircraft_code
+from app.api_v1.aircraft_api.routers_code import (
+    create_aircraft_code, get_all_aircrafts_code
+)
 from app.api_v1.aircraft_api.schemas import SAircraft
 from app.core import Aircraft
 
@@ -24,3 +26,8 @@ async def create_aircraft_view(aircraft: Annotated[SAircraft, Depends()]):
     )
 
     return await create_aircraft_code(new_aircraft=new_aircraft)
+
+
+@get_all_aircrafts.get(path="/get_all_aircrafts", status_code=HTTP_200_OK)
+async def get_all_aircrafts_view():
+    return await get_all_aircrafts_code()
