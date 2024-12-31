@@ -22,7 +22,8 @@ from app.core import Aircraft
 @create_aircraft.post(path="/create_aircraft", status_code=HTTP_201_CREATED)
 async def create_aircraft_view(aircraft: Annotated[SAircraft, Depends()]):
     new_aircraft = Aircraft(
-        name=aircraft.name, weight=aircraft.weight, length=aircraft.length
+        name=aircraft.name, weight_in_tons=aircraft.weight_in_tons,
+        length_in_meters=aircraft.length_in_meters
     )
 
     return await create_aircraft_code(new_aircraft=new_aircraft)
