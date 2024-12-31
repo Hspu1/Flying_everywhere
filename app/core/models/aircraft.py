@@ -9,8 +9,8 @@ class Aircraft(Base):
     aircraft_id = Column(type_=Integer, primary_key=True, autoincrement=True)
     name = Column(type_=String(20), nullable=False, unique=True, index=True)
 
-    weight = Column(type_=Integer, nullable=False)
-    length = Column(type_=Integer, nullable=False)
+    weight_in_tons = Column(type_=Integer, nullable=False)
+    length_in_meters = Column(type_=Integer, nullable=False)
 
     created_at = Column(
         type_=DateTime(timezone=True), server_default=func.now()
