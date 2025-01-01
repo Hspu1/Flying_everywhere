@@ -2,6 +2,8 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
+from app.core import async_session_maker
+
 
 class SFlight(BaseModel):
     flight_name: str = Field(
@@ -26,3 +28,10 @@ class SFlight(BaseModel):
         max_length=20, default="Название самолёта (до 20 символов)")
     ticket_cost_in_usd: int = Field(
         ge=1, le=100_000_000, default="Цена в долларах США (целое число)")
+
+
+async def flight_existence(query) -> bool:
+    async with async_session_maker() as session:
+        res = await session.execute(query)
+
+        return res.scalars().first() is not None

@@ -1,18 +1,19 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import select
-from starlette.status import HTTP_201_CREATED, HTTP_200_OK
+from sqlalchemy import select, delete
+from starlette.status import HTTP_201_CREATED, HTTP_200_OK, HTTP_202_ACCEPTED
 
 from app.api_v1.flight_api.routers_code import (
-    create_flight_code, get_all_flights_code, get_flight_code
+    create_flight_code, get_all_flights_code, get_flight_code,
+    delete_flight_code
 )
 from app.api_v1.flight_api.schemas import SFlight
 from app.core import Flight
 
-create_flight, get_all_flights, get_flight = (
+create_flight, get_all_flights, get_flight, delete_flight = (
     APIRouter(tags=["flight"]), APIRouter(tags=["flight"]),
-    APIRouter(tags=["flight"])
+    APIRouter(tags=["flight"]), APIRouter(tags=["flight"])
 )
 
 
@@ -42,3 +43,13 @@ async def get_all_flights_view():
 async def get_flight_view(name: str = Query(max_length=30)):
     query = select(Flight).where(Flight.flight_name == name)
     return await get_flight_code(query=query)
+
+
+@delete_flight.delete(path="/delete_flight", status_code=HTTP_202_ACCEPTED)
+async def delete_flight_view(name: str = Query(max_length=30)):
+    select_query = select(Flight).where(Flight.flight_name == name)
+    delete_query = delete(Flight).where(Flight.flight_name == name)
+
+    return await delete_flight_code(
+        select_query=select_query, query=delete_query
+    )
