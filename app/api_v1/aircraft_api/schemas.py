@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
 
+from app.core import async_session_maker
+
 
 class SAircraft(BaseModel):
     name: str = Field(
@@ -12,3 +14,10 @@ class SAircraft(BaseModel):
     length_in_meters: int = Field(
         default="Длина самолёта в метрах (целое число)", ge=1, le=999
     )
+
+
+async def aircraft_existence(query) -> bool:
+    async with async_session_maker() as session:
+        res = await session.execute(query)
+
+        return res.scalars().first() is not None

@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from uvicorn import run
 
 from app.api_v1.aircraft_api import (
-    create_aircraft, get_all_aircrafts, get_aircraft
+    create_aircraft, get_all_aircrafts, get_aircraft, delete_aircraft
 )
 
 
@@ -13,6 +13,7 @@ app = FastAPI(
 app.include_router(create_aircraft)
 app.include_router(get_all_aircrafts)
 app.include_router(get_aircraft)
+app.include_router(delete_aircraft)
 
 
 if __name__ == '__main__':

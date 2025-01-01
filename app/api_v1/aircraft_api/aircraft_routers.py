@@ -1,11 +1,14 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import select
-from starlette.status import HTTP_201_CREATED, HTTP_200_OK
+from sqlalchemy import select, delete
+from starlette.status import (
+    HTTP_201_CREATED, HTTP_200_OK, HTTP_202_ACCEPTED
+)
 
 from app.api_v1.aircraft_api.routers_code import (
-    create_aircraft_code, get_all_aircrafts_code, get_aircraft_code
+    create_aircraft_code, get_all_aircrafts_code, get_aircraft_code,
+    delete_aircraft_code
 )
 from app.api_v1.aircraft_api.schemas import SAircraft
 from app.core import Aircraft
@@ -37,4 +40,14 @@ async def get_all_aircrafts_view():
 @get_aircraft.get(path="/get_aircraft", status_code=HTTP_200_OK)
 async def get_aircraft_view(aircraft_name: str = Query(max_length=20)):
     query = select(Aircraft).where(Aircraft.name == aircraft_name)
-    return await get_aircraft_code(select_query=query)
+    return await get_aircraft_code(query=query)
+
+
+@delete_aircraft.delete(path="/delete_aircraft", status_code=HTTP_202_ACCEPTED)
+async def delete_aircraft_view(aircraft_name: str = Query(max_length=20)):
+    select_query = select(Aircraft).where(Aircraft.name == aircraft_name)
+    delete_query = delete(Aircraft).where(Aircraft.name == aircraft_name)
+
+    return await delete_aircraft_code(
+        select_query=select_query, delete_query=delete_query
+    )
