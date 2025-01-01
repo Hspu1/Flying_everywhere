@@ -29,4 +29,4 @@ app.include_router(delete_flight)
 
 
 if __name__ == '__main__':
-    run(app="main:app", port=8001, use_colors=True)
+    run(app="main:app", use_colors=True)
