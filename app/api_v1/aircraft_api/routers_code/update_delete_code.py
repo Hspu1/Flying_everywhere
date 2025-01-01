@@ -9,4 +9,4 @@ async def update_delete_code(select_query, query):
             async with session.begin():
                 return await session.execute(query)
 
-    return no_object()
+    return no_object(correction="самолёта")

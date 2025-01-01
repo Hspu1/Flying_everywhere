@@ -7,4 +7,4 @@ async def get_aircraft_code(query):
         result = await session.execute(query)
         response = result.scalars().first()
 
-        return response if response else no_object()
+        return response if response else no_object(correction="самолёта")

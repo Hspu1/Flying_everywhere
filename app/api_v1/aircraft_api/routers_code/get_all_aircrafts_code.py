@@ -9,4 +9,4 @@ async def get_all_aircrafts_code():
         result = await session.execute(select(Aircraft))
         response = result.scalars().all()
 
-        return response if response else no_data()
+        return response if response else no_data(correction="самолёта")

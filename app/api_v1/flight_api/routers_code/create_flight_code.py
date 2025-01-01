@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 
-from app.api_v1.error_messages import no_object
+from app.api_v1.error_messages import cannot_create_flight
 from app.core import async_session_maker
 
 
@@ -11,4 +11,4 @@ async def create_flight_code(new_flight):
                 session.add(new_flight)
 
     except IntegrityError:
-        return no_object()
+        return cannot_create_flight()

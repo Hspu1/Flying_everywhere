@@ -11,4 +11,4 @@ async def create_aircraft_code(new_aircraft):
                 session.add(new_aircraft)
 
     except IntegrityError:
-        return cannot_create_new_object()
+        return cannot_create_new_object(correction="Самолёт")
