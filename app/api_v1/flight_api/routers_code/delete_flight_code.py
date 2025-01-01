@@ -1,5 +1,3 @@
-from sqlalchemy.exc import IntegrityError
-
 from app.api_v1.error_messages import no_object
 from app.api_v1.flight_api.schemas import flight_existence
 from app.core import async_session_maker
