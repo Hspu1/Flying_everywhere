@@ -1,13 +1,16 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
-from starlette.status import HTTP_201_CREATED
+from starlette.status import HTTP_201_CREATED, HTTP_200_OK
 
-from app.api_v1.flight_api.routers_code import create_flight_code
+from app.api_v1.flight_api.routers_code import create_flight_code, \
+    get_all_flights_code
 from app.api_v1.flight_api.schemas import SFlight
 from app.core import Flight
 
-create_flight = APIRouter(tags=["flight"])
+create_flight, get_all_flights = (
+    APIRouter(tags=["flight"]), APIRouter(tags=["flight"])
+)
 
 
 @create_flight.post(path="/create_flight", status_code=HTTP_201_CREATED)
@@ -25,3 +28,8 @@ async def create_flight_view(flight: Annotated[SFlight, Depends()]):
     )
 
     return await create_flight_code(new_flight=new_flight)
+
+
+@get_all_flights.get(path="/get_all_flights", status_code=HTTP_200_OK)
+async def get_all_flights_view():
+    return await get_all_flights_code()

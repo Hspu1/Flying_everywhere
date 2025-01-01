@@ -6,7 +6,7 @@ from app.api_v1.aircraft_api import (
     update_aircraft_name, update_aircraft_data, delete_aircraft
 )
 from app.api_v1.flight_api import (
-    create_flight
+    create_flight, get_all_flights
 )
 
 app = FastAPI(
@@ -21,6 +21,7 @@ app.include_router(update_aircraft_data)
 app.include_router(delete_aircraft)
 
 app.include_router(create_flight)
+app.include_router(get_all_flights)
 
 
 if __name__ == '__main__':
