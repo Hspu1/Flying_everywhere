@@ -1,15 +1,18 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy import select
 from starlette.status import HTTP_201_CREATED, HTTP_200_OK
 
-from app.api_v1.flight_api.routers_code import create_flight_code, \
-    get_all_flights_code
+from app.api_v1.flight_api.routers_code import (
+    create_flight_code, get_all_flights_code, get_flight_code
+)
 from app.api_v1.flight_api.schemas import SFlight
 from app.core import Flight
 
-create_flight, get_all_flights = (
-    APIRouter(tags=["flight"]), APIRouter(tags=["flight"])
+create_flight, get_all_flights, get_flight = (
+    APIRouter(tags=["flight"]), APIRouter(tags=["flight"]),
+    APIRouter(tags=["flight"])
 )
 
 
@@ -33,3 +36,9 @@ async def create_flight_view(flight: Annotated[SFlight, Depends()]):
 @get_all_flights.get(path="/get_all_flights", status_code=HTTP_200_OK)
 async def get_all_flights_view():
     return await get_all_flights_code()
+
+
+@get_flight.get(path="/get_flight", status_code=HTTP_200_OK)
+async def get_flight_view(name: str = Query(max_length=30)):
+    query = select(Flight).where(Flight.flight_name == name)
+    return await get_flight_code(query=query)
