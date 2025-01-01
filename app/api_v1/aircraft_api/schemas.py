@@ -9,16 +9,21 @@ class SAircraft(BaseModel):
         default="Название самолёта (до 20 символов)"
     )
     weight_in_tons: int = Field(
-        default="Вес самолёта в тоннах (целое число)", ge=1, le=999
-    )
+        default="Вес самолёта в тоннах (целое число)", ge=1, le=999)
     length_in_meters: int = Field(
-        default="Длина самолёта в метрах (целое число)", ge=1, le=999
-    )
+        default="Длина самолёта в метрах (целое число)", ge=1, le=999)
 
 
 class SAircraftNames(BaseModel):
     old_name: str = Field(max_length=20)
     new_name: str = Field(max_length=20)
+
+
+class SAircraftUpdate(BaseModel):
+    old_name: str = Field(max_length=20)
+    new_name: str = Field(max_length=20)
+    weight_in_tons: int = Field(ge=1, le=999)
+    length_in_meters: int = Field(ge=1, le=999)
 
 
 async def aircraft_existence(query) -> bool:
