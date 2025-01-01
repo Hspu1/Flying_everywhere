@@ -12,6 +12,7 @@ class Aircraft(Base):
     weight_in_tons = Column(type_=Integer, nullable=False)
     length_in_meters = Column(type_=Integer, nullable=False)
 
-    created_at = Column(
-        type_=DateTime(timezone=True), server_default=func.now()
+    created_or_updated_at = Column(
+        type_=DateTime(timezone=True),
+        server_default=func.now(), onupdate=func.now(),
     )
