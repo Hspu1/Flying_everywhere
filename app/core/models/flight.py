@@ -30,7 +30,7 @@ class Flight(Base):
     aircraft_name = Column(
         String(20), ForeignKey("aircraft.name")
     )
-    ticket_cost = Column(type_=Integer, nullable=False)
+    ticket_cost_in_usd = Column(type_=Integer, nullable=False)
 
     created_or_updated_at = Column(
         type_=DateTime(timezone=True),
