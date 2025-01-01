@@ -32,6 +32,7 @@ class Flight(Base):
     )
     ticket_cost = Column(type_=Integer, nullable=False)
 
-    created_at = Column(
-        type_=DateTime(timezone=True), server_default=func.now()
+    created_or_updated_at = Column(
+        type_=DateTime(timezone=True),
+        server_default=func.now(), onupdate=func.now(),
     )

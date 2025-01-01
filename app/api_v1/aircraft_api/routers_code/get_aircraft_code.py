@@ -1,4 +1,4 @@
-from app.api_v1.aircraft_api.error_messages import no_aircraft
+from app.api_v1.error_messages import no_object
 from app.core import async_session_maker
 
 
@@ -7,4 +7,4 @@ async def get_aircraft_code(query):
         result = await session.execute(query)
         response = result.scalars().first()
 
-        return response if response else no_aircraft()
+        return response if response else no_object()

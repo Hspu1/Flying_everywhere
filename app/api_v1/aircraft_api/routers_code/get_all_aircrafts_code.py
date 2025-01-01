@@ -1,6 +1,6 @@
 from sqlalchemy import select
 
-from app.api_v1.aircraft_api.error_messages import no_data
+from app.api_v1.error_messages import no_data
 from app.core import async_session_maker, Aircraft
 
 
