@@ -7,12 +7,8 @@ from app.core import async_session_maker
 
 async def delete_flight_code(select_query, query):
     if await flight_existence(query=select_query):
-        try:
-            async with async_session_maker() as session:
-                async with session.begin():
-                    return await session.execute(query)
-
-        except IntegrityError:
-            return no_object(correction="xd")
+        async with async_session_maker() as session:
+            async with session.begin():
+                return await session.execute(query)
 
     return no_object(correction="полёта")
