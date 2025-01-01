@@ -28,7 +28,7 @@ class Flight(Base):
     )
 
     aircraft_name = Column(
-        String, ForeignKey("aircraft.name")
+        String(20), ForeignKey("aircraft.name")
     )
     ticket_cost = Column(type_=Integer, nullable=False)
 
