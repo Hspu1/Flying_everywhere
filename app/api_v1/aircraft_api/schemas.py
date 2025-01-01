@@ -16,6 +16,11 @@ class SAircraft(BaseModel):
     )
 
 
+class SAircraftNames(BaseModel):
+    old_name: str = Field(max_length=20)
+    new_name: str = Field(max_length=20)
+
+
 async def aircraft_existence(query) -> bool:
     async with async_session_maker() as session:
         res = await session.execute(query)

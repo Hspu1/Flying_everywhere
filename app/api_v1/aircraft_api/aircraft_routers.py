@@ -1,16 +1,16 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, update
 from starlette.status import (
     HTTP_201_CREATED, HTTP_200_OK, HTTP_202_ACCEPTED
 )
 
 from app.api_v1.aircraft_api.routers_code import (
     create_aircraft_code, get_all_aircrafts_code, get_aircraft_code,
-    delete_aircraft_code
+    update_delete_code
 )
-from app.api_v1.aircraft_api.schemas import SAircraft
+from app.api_v1.aircraft_api.schemas import SAircraft, SAircraftNames
 from app.core import Aircraft
 
 (
@@ -43,11 +43,21 @@ async def get_aircraft_view(aircraft_name: str = Query(max_length=20)):
     return await get_aircraft_code(query=query)
 
 
+@update_aircraft_name.patch(path="/update_aircraft_name", status_code=HTTP_202_ACCEPTED)
+async def update_aircraft_name_view(aircraft_names: Annotated[SAircraftNames, Depends()]):
+    select_query = select(Aircraft).where(Aircraft.name == aircraft_names.old_name)
+    update_query = update(Aircraft).where(Aircraft.name == aircraft_names.old_name).values(name=aircraft_names.new_name)
+
+    return await update_delete_code(
+        select_query=select_query, query=update_query
+    )
+
+
 @delete_aircraft.delete(path="/delete_aircraft", status_code=HTTP_202_ACCEPTED)
 async def delete_aircraft_view(aircraft_name: str = Query(max_length=20)):
     select_query = select(Aircraft).where(Aircraft.name == aircraft_name)
     delete_query = delete(Aircraft).where(Aircraft.name == aircraft_name)
 
-    return await delete_aircraft_code(
-        select_query=select_query, delete_query=delete_query
+    return await update_delete_code(
+        select_query=select_query, query=delete_query
     )
